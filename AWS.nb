@@ -1,0 +1,331 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     11399,        321]
+NotebookOptionsPosition[     10958,        301]
+NotebookOutlinePosition[     11311,        317]
+CellTagsIndexPosition[     11268,        314]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+   "Pad", " ", "the", " ", "string", " ", "s", " ", "with", " ", "x", " ", 
+    "on", " ", "the", " ", 
+    RowBox[{"right", "/", "left"}], " ", "so", " ", "it", " ", "has", " ", 
+    "length", " ", 
+    RowBox[{"n", "."}]}], "*)"}], 
+  RowBox[{
+   RowBox[{
+    RowBox[{"strpadr", "[", 
+     RowBox[{"s_", ",", "n_", ",", "x_"}], "]"}], ":=", 
+    RowBox[{"StringJoin", "@", 
+     RowBox[{"PadRight", "[", 
+      RowBox[{
+       RowBox[{"Characters", "[", "s", "]"}], ",", "n", ",", "x"}], "]"}]}]}],
+    "\n", 
+   RowBox[{
+    RowBox[{"strpadl", "[", 
+     RowBox[{"s_", ",", "n_", ",", "x_"}], "]"}], ":=", 
+    RowBox[{"StringJoin", "@", 
+     RowBox[{"PadLeft", "[", 
+      RowBox[{
+       RowBox[{"Characters", "[", "s", "]"}], ",", "n", ",", "x"}], "]"}]}]}],
+    "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"hex", " ", "representation"}], ";", 
+     RowBox[{
+     "optionally", " ", "pad", " ", "to", " ", "length", " ", "n", " ", 
+      "with", " ", "zeros"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"hex", "[", 
+     RowBox[{"x_", ",", 
+      RowBox[{"n_:", "Null"}]}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"n", "===", "Null"}], ",", "Identity", ",", 
+       RowBox[{
+        RowBox[{"strpadl", "[", 
+         RowBox[{"#", ",", "n", ",", "\"\<0\>\""}], "]"}], "&"}]}], "]"}], 
+     "@", 
+     RowBox[{"IntegerString", "[", 
+      RowBox[{"x", ",", "16"}], "]"}]}]}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"parse", " ", "hex", " ", "representation", " ", 
+     RowBox[{"(", 
+      RowBox[{"return", " ", "an", " ", "integer"}], ")"}]}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"unhex", "[", "x_", "]"}], ":=", 
+    RowBox[{"FromDigits", "[", 
+     RowBox[{"x", ",", "16"}], "]"}]}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Concatenate", " ", "all", " ", "the", " ", "arguments", " ", "as", " ", 
+     "strings", " ", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"if", " ", 
+        RowBox[{"they", "'"}], "re", " ", "not", " ", "already"}], ")"}], 
+      "."}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"cat", "=", 
+     RowBox[{
+      RowBox[{"StringJoin", "@@", 
+       RowBox[{"(", 
+        RowBox[{"ToString", "/@", 
+         RowBox[{"{", "##", "}"}]}], ")"}]}], "&"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Takes", " ", "a", " ", "string", " ", "like", " ", "\"\<xy\>\"", " ", 
+     "and", " ", "returns", " ", "the", " ", "hex", " ", "representation", 
+     " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"also", " ", "a", " ", "string"}], ",", 
+       RowBox[{"twice", " ", "as", " ", "long"}]}], ")"}], " ", "of", " ", 
+     "the", " ", "bytes", " ", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"ascii", " ", "codes"}], ")"}], "."}]}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"tobytes", "[", "s_", "]"}], ":=", 
+    RowBox[{"cat", "@@", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"hex", "[", 
+         RowBox[{"#", ",", "2"}], "]"}], "&"}], "/@", 
+       RowBox[{"ToCharacterCode", "[", "s", "]"}]}], ")"}]}]}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Takes", " ", "a", " ", "length", " ", "n", " ", "string", " ", "like", 
+     " ", "\"\<0a10\>\"", " ", "and", " ", "returns", " ", "a", " ", "length",
+      " ", 
+     RowBox[{"n", "/", "2"}], " ", "string", " ", "where", " ", "in", " ", 
+     "this", " ", "example", " ", "the", " ", "first", " ", "character", " ", 
+     "is", " ", "whatever", " ", "has", " ", "ascii", " ", "code", " ", "10", 
+     " ", 
+     RowBox[{"(", 
+      RowBox[{"\"\<a\>\"", " ", "in", " ", "hex"}], ")"}], " ", "and", " ", 
+     "the", " ", "second", " ", "is", " ", "whatever", " ", "has", " ", 
+     "ascii", " ", "code", " ", "16", " ", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"\"\<10\>\"", " ", "in", " ", "hex"}], ")"}], "."}]}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"frombytes", "[", "hs_", "]"}], ":=", 
+    RowBox[{"FromCharacterCode", "[", 
+     RowBox[{"unhex", "/@", 
+      RowBox[{"cat", "@@@", 
+       RowBox[{"Partition", "[", 
+        RowBox[{
+         RowBox[{"Characters", "[", "hs", "]"}], ",", "2"}], "]"}]}]}], 
+     "]"}]}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Bitwise", "-", 
+     RowBox[{
+     "xor", " ", "of", " ", "two", " ", "integers", " ", "given", " ", "in", 
+      " ", 
+      RowBox[{"hex", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"hexbitxor", "[", 
+     RowBox[{"a_String", ",", "b_String"}], "]"}], ":=", 
+    RowBox[{"hex", "@", 
+     RowBox[{"BitXor", "[", 
+      RowBox[{
+       RowBox[{"unhex", "@", "a"}], ",", 
+       RowBox[{"unhex", "@", "b"}]}], "]"}]}]}], "\n", "\[IndentingNewLine]", 
+   
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"Repeat", " ", "the", " ", "string", " ", "s"}], ",", 
+     RowBox[{"n", " ", 
+      RowBox[{"times", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"strrpt", "[", 
+     RowBox[{"s_", ",", "n_"}], "]"}], ":=", 
+    RowBox[{"cat", "@@", 
+     RowBox[{"ConstantArray", "[", 
+      RowBox[{"s", ",", "n"}], "]"}]}]}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Byte", " ", "length", " ", "of", " ", "a", " ", "hex", " ", "string", 
+     " ", "is", " ", "half", " ", "the", " ", "string", " ", 
+     RowBox[{"length", "."}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"bytelen", "[", "s_", "]"}], ":=", 
+    RowBox[{"Ceiling", "[", 
+     RowBox[{
+      RowBox[{"StringLength", "[", "s", "]"}], "/", "2"}], "]"}]}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "FileHash", " ", "is", " ", "the", " ", "only", " ", "way", " ", "to", 
+     " ", "hash", " ", "data", " ", "given", " ", "as", " ", "a", " ", 
+     "string", " ", "in", " ", 
+     RowBox[{"Mma", "."}]}], "*)"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"hash", "[", 
+      RowBox[{"s_String", ",", 
+       RowBox[{"h_:", "\"\<SHA\>\""}]}], "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"stream", "=", 
+          RowBox[{"StringToStream", "[", "s", "]"}]}], ",", "result"}], "}"}],
+        ",", 
+       RowBox[{
+        RowBox[{"result", "=", 
+         RowBox[{"FileHash", "[", 
+          RowBox[{"stream", ",", "h"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"Close", "[", "stream", "]"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"hex", "@", "result"}]}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"sha1", "[", "s_", "]"}], ":=", 
+    RowBox[{"hash", "[", "s", "]"}]}], "\n", 
+   RowBox[{
+    RowBox[{"md5", "[", "s_", "]"}], ":=", 
+    RowBox[{"hash", "[", 
+     RowBox[{"s", ",", "\"\<SHA256\>\""}], "]"}]}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Return", " ", "the", " ", "hmac", " ", "digest", " ", "using", " ", 
+     "hash", " ", "function", " ", "h", " ", "for", " ", "string", " ", "s", 
+     " ", "with", " ", "key", " ", 
+     RowBox[{"k", "."}]}], "*)"}], 
+   RowBox[{
+    RowBox[{"hmac", "[", 
+     RowBox[{"s_", ",", "k_", ",", 
+      RowBox[{"h_:", "sha1"}]}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"b", ",", "key", ",", "ipad", ",", "opad"}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"b", "=", "64"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+        "block", " ", "size", " ", "for", " ", "both", " ", "md5", " ", "and",
+          " ", "sha1"}], "*)"}], 
+       RowBox[{"key", "=", 
+        RowBox[{"tobytes", "[", "k", "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"key", "=", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"bytelen", "[", "key", "]"}], ">", "b"}], ",", 
+          RowBox[{"h", "[", 
+           RowBox[{"frombytes", "@", "key"}], "]"}], ",", "key"}], "]"}]}], 
+       ";", "\[IndentingNewLine]", 
+       RowBox[{"key", "=", 
+        RowBox[{"strpadr", "[", 
+         RowBox[{"key", ",", 
+          RowBox[{"2", " ", "b"}], ",", "\"\<0\>\""}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"ipad", "=", 
+        RowBox[{"hexbitxor", "[", 
+         RowBox[{
+          RowBox[{"strrpt", "[", 
+           RowBox[{"\"\<36\>\"", ",", "b"}], "]"}], ",", "key"}], "]"}]}], 
+       ";", "\[IndentingNewLine]", 
+       RowBox[{"opad", "=", 
+        RowBox[{"hexbitxor", "[", 
+         RowBox[{
+          RowBox[{"strrpt", "[", 
+           RowBox[{"\"\<5c\>\"", ",", "b"}], "]"}], ",", "key"}], "]"}]}], 
+       ";", "\[IndentingNewLine]", 
+       RowBox[{"h", "[", 
+        RowBox[{"frombytes", "[", 
+         RowBox[{"opad", "<>", 
+          RowBox[{"h", "[", 
+           RowBox[{"frombytes", "[", 
+            RowBox[{"ipad", "<>", 
+             RowBox[{"tobytes", "@", "s"}]}], "]"}], "]"}]}], "]"}], 
+        "]"}]}]}], "]"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.63946536661722*^9, 3.6394653684934998`*^9}, 
+   3.639469627097633*^9, {3.6394698567095833`*^9, 3.63946987143412*^9}, 
+   3.6394699632297688`*^9, {3.63947049664213*^9, 3.639470497059513*^9}}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.6394699993796453`*^9, 3.639470043543741*^9}, {
+   3.63947022637471*^9, 3.6394702401538687`*^9}, 3.639470283410584*^9, 
+   3.639470346212672*^9, {3.639470431319804*^9, 3.639470435134894*^9}, 
+   3.6394704941839733`*^9}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.639470029537045*^9, 3.639470029544888*^9}, {
+  3.639470212606947*^9, 3.639470236643004*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"hmac", "[", 
+   RowBox[{
+   "\"\<The quick brown fox jumps over the lazy dog\>\"", ",", "\"\<key\>\"", 
+    ",", "md5"}], "]"}], "\n"}]], "Input",
+ CellChangeTimes->{{3.639470036122499*^9, 3.6394700361334476`*^9}, {
+  3.639470189562133*^9, 3.639470195061514*^9}, {3.639470252586817*^9, 
+  3.639470258495624*^9}, {3.639470301580804*^9, 3.6394703026652117`*^9}, {
+  3.639470439889303*^9, 3.639470440447404*^9}}],
+
+Cell[BoxData["\<\"\
+f7bc83f430538424b13298e6aa6fb143ef4d59a14946175997479dbc2d1a3cd8\"\>"], \
+"Output",
+ CellChangeTimes->{3.639470259302005*^9, 3.6394703041878223`*^9, 
+  3.639470440975782*^9}]
+}, Open  ]]
+},
+WindowSize->{808, 871},
+WindowMargins->{{4, Automatic}, {Automatic, 4}},
+FrontEndVersion->"10.1 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 23, \
+2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 9304, 249, 845, "Input"],
+Cell[9865, 271, 267, 4, 28, "Input"],
+Cell[10135, 277, 141, 2, 28, "Input"],
+Cell[CellGroupData[{
+Cell[10301, 283, 444, 9, 46, "Input"],
+Cell[10748, 294, 194, 4, 28, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+
